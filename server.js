@@ -10,7 +10,7 @@ app.use(cors());
 const sheets = google.sheets("v4");
 const auth = new google.auth.GoogleAuth({
   keyFile:
-    "C:/Users/shivi/OneDrive/Desktop/SpardhaVolleyballWebsite/backEndVolleyball/service-account-file.json", // Update this path
+    "C:/Users/vrgot/OneDrive/Desktop/backend/backEndVolleyball/service-account-file.json", // Update this path
   scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 });
 
@@ -90,13 +90,14 @@ app.get("/api/results", async (req, res) => {
         .map((row) => ({
           teamA: row[0],
           teamB: row[1],
+          gender: row[3],
           matchType: row[5],
           teamAsets: row[7],
           teamBsets: row[8],
           teamAs : row[8],
           teamBs : row[9]
         }));
-      res.json(results);
+      res.json(results.reverse());
     } else {
       res.status(404).send("No data found.");
     }
@@ -110,6 +111,8 @@ app.get("/api/test", (req, res) => {
   console.log("GET /api/test");
   res.send("Hello Gowtham");
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
