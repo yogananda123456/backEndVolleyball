@@ -10,7 +10,7 @@ app.use(cors());
 const sheets = google.sheets("v4");
 const auth = new google.auth.GoogleAuth({
   keyFile:
-    "C:/Users/T VIJAYA BALAJI/Desktop/vollleyBallWebSite/backEnd/service-account-file.json", // Update this path
+    "C:/Users/shivi/OneDrive/Desktop/SpardhaVolleyballWebsite/backEndVolleyball/service-account-file.json", // Update this path
   scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 });
 
@@ -67,6 +67,9 @@ app.get("/api/upcoming", async (req, res) => {
             court: row[4],
             matchType: row[5],
             time : row[6],
+            date : row[7],
+            
+
         }));
       res.json(upcomingMatches);
     } else {
@@ -87,9 +90,11 @@ app.get("/api/results", async (req, res) => {
         .map((row) => ({
           teamA: row[0],
           teamB: row[1],
-          
+          matchType: row[5],
           teamAsets: row[7],
           teamBsets: row[8],
+          teamAs : row[8],
+          teamBs : row[9]
         }));
       res.json(results);
     } else {
