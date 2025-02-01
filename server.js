@@ -9,8 +9,7 @@ app.use(cors());
 // Google Sheets API setup
 const sheets = google.sheets("v4");
 const auth = new google.auth.GoogleAuth({
-  keyFile:
-    "C:/Users/gowth/Desktop/projects/DRAVOSSITE/backend/backEndVolleyball/service-account-file.json", // Update this path
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT), // ✅ Load from ENV
   scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 });
 
