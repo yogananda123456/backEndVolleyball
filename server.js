@@ -10,7 +10,7 @@ app.use(cors());
 const sheets = google.sheets("v4");
 const auth = new google.auth.GoogleAuth({
   keyFile:
-    "C:/Users/vrgot/OneDrive/Desktop/backend/backEndVolleyball/service-account-file.json", // Update this path
+    "C:/Users/gowth/Desktop/projects/DRAVOSSITE/backend/backEndVolleyball/service-account-file.json", // Update this path
   scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
 });
 
@@ -106,6 +106,54 @@ app.get("/api/results", async (req, res) => {
   }
 });
 
+app.get("/api/sheet2data", async (req, res) => {
+  console.log("GET /api/sheet2data"); // Debugging log
+  try {
+    const rows = await fetchData("match-1"); // Ensure the correct range is used
+    if (rows.length) {
+      const sheet2Data = rows
+        .filter((row) => row[0] === "live")
+        .map((row) => ({
+          // Map the data as needed
+          match1Asets: row[1],
+          match1Ascore: row[2],
+          match1Bscore: row[3],
+          match1Bsets: row[4],
+          // Add more columns as needed
+        }));
+      res.json(sheet2Data);
+    } else {
+      res.status(404).send("No data found.");
+    }
+  } catch (error) {
+    res.status(500).send(error.toString());
+  }
+});
+
+app.get("/api/sheet3data", async (req, res) => {
+  console.log("GET /api/sheet3data"); // Debugging log
+  try {
+    const rows = await fetchData("sheet3"); // Ensure the correct range is used
+    if (rows.length) {
+      const sheet3Data = rows
+        .filter((row) => row[0] === "live")
+        .map((row) => ({
+          // Map the data as needed
+          match2Asets: row[1],
+          match2Ascore: row[2],
+          match2Bscore: row[3],
+          match2Bsets: row[4],
+          // Add more columns as needed
+        }));
+      res.json(sheet3Data);
+    } else {
+      res.status(404).send("No data found.");
+    }
+  } catch (error) {
+    res.status(500).send(error.toString());
+  }
+});
+
 // Test API endpoint
 app.get("/api/test", (req, res) => {
   console.log("GET /api/test");
@@ -121,4 +169,6 @@ app.listen(PORT, () => {
   console.log(`GET http://localhost:${PORT}/api/upcoming`);
   console.log(`GET http://localhost:${PORT}/api/results`);
   console.log(`GET http://localhost:${PORT}/api/test`);
+  console.log(`GET http://localhost:${PORT}/api/sheet2data`); // Ensure this is logged
+  console.log(`GET http://localhost:${PORT}/api/sheet3data`); // Ensure this is logged
 });
