@@ -106,13 +106,13 @@ app.get("/api/results", async (req, res) => {
   }
 });
 
-app.get("/api/sheet2data", async (req, res) => {
-  console.log("GET /api/sheet2data"); // Debugging log
+app.get("/api/court1data", async (req, res) => {
+  console.log("GET /api/court1data"); // Debugging log
   try {
-    const rows = await fetchData("match-1"); // Ensure the correct range is used
+    const rows = await fetchData("Court 1"); // Ensure the correct range is used
     if (rows.length) {
       const sheet2Data = rows
-        .filter((row) => row[0] === "live")
+        .filter((row) =>(row[0] === "live") )
         .map((row) => ({
           // Map the data as needed
           match1Asets: row[1],
@@ -130,13 +130,13 @@ app.get("/api/sheet2data", async (req, res) => {
   }
 });
 
-app.get("/api/sheet3data", async (req, res) => {
-  console.log("GET /api/sheet3data"); // Debugging log
+app.get("/api/court2data", async (req, res) => {
+  console.log("GET /api/court2data"); // Debugging log
   try {
-    const rows = await fetchData("sheet3"); // Ensure the correct range is used
+    const rows = await fetchData("Court 2"); // Ensure the correct range is used
     if (rows.length) {
       const sheet3Data = rows
-        .filter((row) => row[0] === "live")
+        .filter((row) => (row[0] === "live") )
         .map((row) => ({
           // Map the data as needed
           match2Asets: row[1],
@@ -169,6 +169,6 @@ app.listen(PORT, () => {
   console.log(`GET http://localhost:${PORT}/api/upcoming`);
   console.log(`GET http://localhost:${PORT}/api/results`);
   console.log(`GET http://localhost:${PORT}/api/test`);
-  console.log(`GET http://localhost:${PORT}/api/sheet2data`); // Ensure this is logged
-  console.log(`GET http://localhost:${PORT}/api/sheet3data`); // Ensure this is logged
+  console.log(`GET http://localhost:${PORT}/api/court1data`); // Ensure this is logged
+  console.log(`GET http://localhost:${PORT}/api/court2data`); // Ensure this is logged
 });
